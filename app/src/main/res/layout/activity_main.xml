@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.myapplication.MainActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       >
+       <Button
+           android:id="@+id/button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="选择新图"
+           android:layout_margin="10dp"
+           tools:layout_editor_absoluteX="68dp"
+           tools:layout_editor_absoluteY="129dp" />
+
+       <Button
+           android:id="@+id/button2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="选择旧图"
+           android:layout_margin="10dp"
+           tools:layout_editor_absoluteY="129dp"
+           tools:layout_editor_absoluteX="238dp" />
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        >
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="旧图："
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="245dp" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="247dp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始处理"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="323dp" />
+
+
+
+
+</LinearLayout>

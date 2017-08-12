@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/alumbs_grid"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:clipToPadding="false"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="true"
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:scrollbars="none"
+        />
+
+</LinearLayout>
