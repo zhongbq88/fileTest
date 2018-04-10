@@ -4,11 +4,9 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,8 +37,7 @@ public class FileListActivity extends ListActivity {
 
         String sDStateString = Environment.getExternalStorageState();
         if(sDStateString.equals(Environment.MEDIA_MOUNTED)) {
-            File SDFile = Environment.getExternalStorageDirectory();
-            curPath = /*SDFile.getAbsolutePath() +*/ "/";
+            curPath = ConstUtil.NEW_IMAGE_ROOT_PATH;
             itemList = getData(curPath);
             adapter = new SimpleAdapter(this, itemList, R.layout.list_item, from, to);
             setListAdapter(adapter);

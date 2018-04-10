@@ -48,7 +48,7 @@ public class MediaPickerActivity extends AppCompatActivity{
                 File file = new File(params[0]);
                 if(file.exists()&&file.listFiles().length>0){
                     for(File f:file.listFiles()){
-                        if(!f.getName().startsWith("lpic")){
+                        if(!f.getName().startsWith("lola")){
                             list.add(f.getAbsolutePath());
                         }
                     }

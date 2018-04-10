@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".MediaPickerActivity"/>
         <activity android:name=".FileListActivity"/>
+        <activity android:name=".SettingActivity"/>
     </application>
 
 </manifest>
