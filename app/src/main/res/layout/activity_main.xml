@@ -18,25 +18,65 @@
        android:layout_height="wrap_content"
        android:gravity="center"
        >
-       <Button
-           android:id="@+id/button"
-           android:layout_width="wrap_content"
+       <LinearLayout
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="选择新图"
-           android:layout_margin="10dp"
-            />
+           android:orientation="vertical"
+           android:layout_weight="1"
+           android:gravity="center"
+           >
+           <ImageView
+               android:id="@+id/new_img"
+               android:layout_width="wrap_content"
+               android:layout_height="120dp"
+               />
+           <TextView
+               android:id="@+id/new_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:lines="1"
+               android:ellipsize="end"
+               />
+           <Button
+               android:id="@+id/button"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="选择新图"
+               android:layout_margin="5dp"
+               />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_weight="1"
+           android:gravity="center"
+           >
+           <ImageView
+               android:id="@+id/old_img"
+               android:layout_width="wrap_content"
+               android:layout_height="120dp"
+               />
+           <TextView
+               android:id="@+id/old_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:lines="1"
+               android:ellipsize="end"
+               />
        <Button
            android:id="@+id/button2"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="选择目标"
-           android:layout_margin="10dp"
+           android:layout_margin="5dp"
             />
+       </LinearLayout>
    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center"
         >
     <TextView
@@ -60,10 +100,12 @@
          />
 
     <LinearLayout
+        android:id="@+id/edit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
+        android:visibility="visible"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,10 +141,9 @@
                 />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/edit_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -196,13 +237,25 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="保存"
-            android:onClick="saveClcik"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存"
+                android:onClick="saveClcik"
+                />
+            <Button
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定位"
+                android:onClick="locationClcik"
+                android:layout_marginLeft="20dp"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

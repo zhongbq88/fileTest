@@ -14,7 +14,11 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -123,8 +127,10 @@ class AlbumsAdapter extends BaseAdapter
             holder = new ViewHolder();
             convertView = LayoutInflater.from(alumbsFragment.getActivity()).inflate(R.layout.griditem_albums, null);
             holder.coverImageView = (ImageView) convertView.findViewById(R.id.media_photo_image);
+            holder.textView = (TextView) convertView.findViewById(R.id.textView);
             ViewGroup.LayoutParams layoutParams = holder.coverImageView.getLayoutParams();
             layoutParams.height =  layoutParams.width = width;
+            holder.textView.setWidth(width);
             convertView.setTag(holder);
         }
         else
@@ -132,7 +138,10 @@ class AlbumsAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
         String album = getItem(position);
-        setImgBitmap(album,holder.coverImageView);
+        Glide.with(alumbsFragment.getActivity()).load(album).into(holder.coverImageView);
+       // setImgBitmap(album,holder.coverImageView);
+        File file = new File(album);
+        holder.textView.setText(file.getName());
         return convertView;
     }
 
@@ -150,6 +159,7 @@ class AlbumsAdapter extends BaseAdapter
 
     class ViewHolder {
         ImageView coverImageView;
+        TextView textView;
     }
 
     public void setDataSource(List<String> albumEntries)

@@ -17,8 +17,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.administrator.myapplication.sp.SpData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String newPath ,oldPath;
     EditText uploadtime,lontitude,latitude,province,city,district,street,addr;
     View edit_layout;
+    ImageView new_img,old_img;
+    TextView new_name,old_name;
 
 
     @Override
@@ -52,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         oldBtn.setOnClickListener(this);
         prcBtn.setOnClickListener(this);
         initEditView();
+
+        new_img = (ImageView) findViewById(R.id.new_img);
+        old_img =(ImageView) findViewById(R.id.old_img);
+        new_name =(TextView) findViewById(R.id.new_name);
+        old_name = (TextView) findViewById(R.id.old_name);
     }
 
     private void initEditView(){
@@ -182,10 +194,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 protected void onPostExecute(Boolean bool) {
-                    if(bool){
-                        viewData(new File(oldPath).getName());
+                    if(!TextUtils.isEmpty(oldPath)){
+                        File file = new File(oldPath);
+                        Glide.with(MainActivity.this).load(file).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(old_img);
+                        viewData(file.getName());
                     }
-                    Toast.makeText(getApplicationContext(),bool?"处理成功！":"处理失败！",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),bool?"处理成功！":"处理失败！",Toast.LENGTH_LONG).show();
                 }
             }.execute();
 
@@ -198,12 +212,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(resultCode==RESULT_OK){
             if(requestCode==2){
                 oldPath = data.getStringExtra(MediaPickerActivity.SHOW_PATH);
+                Log.e("Test","oldPath="+oldPath);
                 if(!TextUtils.isEmpty(oldPath)){
                     File file = new File(oldPath);
                     name.setText(file.getName().substring(3,file.getName().length()-18));
+                    Glide.with(this).load(file).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(old_img);
+                    old_name.setText(file.getName());
                 }
             }else{
                 newPath = data.getStringExtra(MediaPickerActivity.SHOW_PATH);
+                Log.e("Test","newPath="+newPath);
+                Glide.with(this).load(newPath).into(new_img);
+                File file = new File(newPath);
+                SpData.setData(ConstUtil.NEW_IMAGE_KEY,file.getParent()+"/");
+                new_name.setText(file.getName());
             }
         }
     }
@@ -260,15 +282,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String sl = "select * from "+ConstUtil.DB_TABLE_NAME+" where photodata='"+photodata+"'";
             Log.d("DEBUG", "sl = "+sl);
             cursor = getDb().rawQuery(sl,null);
+            Log.d("DEBUG", "cursor = "+cursor+",cursor.moveToFirst()="+cursor.moveToFirst());
             if(cursor!=null&&cursor.moveToFirst()){
-                uploadtime.setText(getString( cursor,6));
-                lontitude.setText(getString( cursor,7));
-                latitude.setText(getString( cursor,8));
-                province.setText(getString( cursor,9));
-                city.setText(getString( cursor,10));
-                district.setText(getString( cursor,11));
-                street.setText(getString( cursor,12));
-                addr.setText(getString( cursor,13));
+                uploadtime.setText(getString( cursor,"uploadtime"));
+                lontitude.setText(getString( cursor,"lontitude"));
+                latitude.setText(getString( cursor,"latitude"));
+                province.setText(getString( cursor,"province"));
+                city.setText(getString( cursor,"city"));
+                district.setText(getString( cursor,"district"));
+                street.setText(getString( cursor,"street"));
+                addr.setText(getString( cursor,"addr"));
                 edit_layout.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
@@ -298,8 +321,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private String getString(Cursor cursor,int index){
-        String text = cursor.getString(index);
+    private String getString(Cursor cursor,String columnName){
+        String text = cursor.getString(cursor.getColumnIndex(columnName));
         if(TextUtils.isEmpty(text)){
             return "";
         }
@@ -327,4 +350,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addr.setText(stringBuilder);
         }
     };
+    private static final int GO_FOR_BAIDU_MAP = 1;
+    public void locationClcik(View view){
+        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("lontitude", lontitude.getText() + "");
+        bundle.putString("latitude",latitude.getText() + "");
+        bundle.putString("province", province.getText()+"");
+        bundle.putString("city",city.getText()+"");
+        bundle.putString("district", district.getText()+"");
+        bundle.putString("street", street.getText()+"");
+        intent.putExtras(bundle);
+        startActivityForResult(intent, GO_FOR_BAIDU_MAP);
+    }
 }
