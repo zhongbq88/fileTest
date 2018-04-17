@@ -25,12 +25,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.myapplication.sp.SpData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.example.administrator.myapplication.SystemManager.rootDBPath;
 
@@ -352,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     private static final int GO_FOR_BAIDU_MAP = 1;
     public void locationClcik(View view){
-        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+        /*Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("lontitude", lontitude.getText() + "");
         bundle.putString("latitude",latitude.getText() + "");
@@ -361,6 +369,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bundle.putString("district", district.getText()+"");
         bundle.putString("street", street.getText()+"");
         intent.putExtras(bundle);
-        startActivityForResult(intent, GO_FOR_BAIDU_MAP);
+        startActivityForResult(intent, GO_FOR_BAIDU_MAP);*/
+        ApiService.getLocation(lontitude.getText().toString(), latitude.getText().toString(), new ApiService.LocationCallback() {
+            @Override
+            public void onResponse(final JSONObject json) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            province.setText(json.getString("province"));
+                            city.setText(json.getString("city"));
+                            district.setText(json.getString("district"));
+                            street.setText(json.getString("street"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 }
